@@ -1,0 +1,14 @@
+.graph{
+	position: relative;
+  	width:250px;
+  	float: left;
+    margin: 35px;
+}
+#container{
+    width: 1024px;
+    margin: 0 auto;
+ }
+
+ h2.title{
+ 	text-align: center;
+ }
