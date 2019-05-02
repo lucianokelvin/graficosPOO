@@ -3,7 +3,7 @@
 > Gerador de gráficos para o sistema MsFloss
 
 ## Usage
-Adicione o link para os seguintas arquivos .js
+Adicione o link para os seguintas arquivos javascript
 ```html
 
 <script src="node_modules/chart.js/dist/Chart.min.js"></script>
