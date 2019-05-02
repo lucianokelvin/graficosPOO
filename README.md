@@ -1,2 +1,3 @@
-# gráficos POO
-Exemplos de gráficos para Projeto POO
+# Gráficos MsFLoss
+
+> Gerador de gráficos para o sistema MsFloss
