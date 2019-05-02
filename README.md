@@ -1,6 +1,6 @@
-# Gráficos MsFLoss
+# Gráficos MsFLOSS
 
-> Gerador de gráficos para o sistema MsFloss
+> Gerador de gráficos para o sistema MsFLOSS
 
 ## Usage
 Adicione o link para os seguintas arquivos javascript
