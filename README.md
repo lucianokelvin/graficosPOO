@@ -3,7 +3,7 @@
 > MsFloss plot builder.
 
 ## Usage
-The javascript file links below must be inserted in your html file
+The javascript file links below must be inserted in one html file
 ```html
 
 <script src="node_modules/chart.js/dist/Chart.min.js"></script>
