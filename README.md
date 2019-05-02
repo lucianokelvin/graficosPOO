@@ -10,7 +10,7 @@ Adicione o link para os seguintas arquivos javascript
 <script src="api.js" type="text/javascript"></script>
 ```
 
-Para chamar os gráficos, crie um canvas no seu HTML
+Para plotar os gráficos crie um canvas no seu HTML
 ```HTML
 <canvas id="commitsChart" width="100" height="100"></canvas>
 ```
