@@ -1,4 +1,4 @@
-# MsFloss Plots and Data Resumè
+# MsFloss Plots and Data Resume
 
 > MsFloss plot builder.
 
