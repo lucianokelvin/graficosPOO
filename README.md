@@ -1,23 +1,22 @@
-# Gráficos MsFLOSS
+# MsFloss Plots and Data Resumè
 
-> Gerador de gráficos para o sistema MsFLOSS
+> MsFloss plot builder.
 
 ## Usage
-Adicione o link para os seguintas arquivos javascript
+The javascript file links below must be inserted in your html file
 ```html
 
 <script src="node_modules/chart.js/dist/Chart.min.js"></script>
 <script src="api.js" type="text/javascript"></script>
 ```
+In the order to plot, it is necessary:
 
-Para plotar os gráficos crie um canvas no seu HTML
+One HTML canvas
 ```HTML
 <canvas id="commitsChart" width="100" height="100"></canvas>
 ```
 
-Em seguida chame a função JS com o id do canvas
+Call JavaScript function by “id” canvas 
 ```js
 numberOfCommits("commitsChart");
 ```
-
-
