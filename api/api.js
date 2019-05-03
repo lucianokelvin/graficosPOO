@@ -1,12 +1,12 @@
-var url = 'http://127.0.0.1:3000';
+var url = 'https://msfloss.herokuapp.com';
 
 async function numberOfCommits(elementId){
-	var endpoint = url + '/irc/commits/'
+	var endpoint = url + '/git/commits/'
  	graphBar(endpoint, elementId, "Number of Commits")
 }
 
 async function numberOfCommitsReviews(elementId){
-	var endpoint = url + '/irc/commits_reviews/'
+	var endpoint = url + '/git/commits_reviews/'
  	graphBarStack(endpoint, elementId, "Commits And Reviews")
 }
 
@@ -16,15 +16,14 @@ async function irc_users(elementId){
 }
 
 
-
-
-
+//Get the JSON
 async function getCall(endpoint){
   const response = await fetch(endpoint);
   const body = await response.json();
   return body;
 }
 
+// Plot a graph of bar
 async function graphBar(endpoint, element, label){
 	const data = await getCall(endpoint)
 	var ctx = document.getElementById(element);
@@ -47,28 +46,12 @@ async function graphBar(endpoint, element, label){
                     beginAtZero: true
                 }
             }]
+            }
         }
-    }
-});
+    });
 }
 
-async function lineBar(endpoint, element, label){
-	const data = await getCall(endpoint)
-	var ctx = document.getElementById(element);
-
-	var myLineChart = new Chart(ctx, {
-   	type: 'line',
-            data: {
-                labels: Object.keys(data[0]),
-                datasets: [{
-                    label: label,
-                    backgroundColor: window.chartColors.green,
-                    borderColor: window.chartColors.green,
-                    data: Object.values(data[0]),
-                    fill: false,
-                }]}});
-}
-
+// Plot a line of bar with stack
 async function graphBarStack(endpoint, element, label){
 	const data = await getCall(endpoint)
 	var ctx = document.getElementById(element);
@@ -102,4 +85,22 @@ async function graphBarStack(endpoint, element, label){
                     }
     }
 });
+}
+
+// Plot a graph of line
+async function lineBar(endpoint, element, label){
+    const data = await getCall(endpoint)
+    var ctx = document.getElementById(element);
+
+    var myLineChart = new Chart(ctx, {
+    type: 'line',
+            data: {
+                labels: Object.keys(data[0]),
+                datasets: [{
+                    label: label,
+                    backgroundColor: window.chartColors.green,
+                    borderColor: window.chartColors.green,
+                    data: Object.values(data[0]),
+                    fill: false,
+                }]}});
 }
