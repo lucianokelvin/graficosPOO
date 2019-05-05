@@ -1,5 +1,5 @@
-var url = 'http://localhost:3000';
-// var url = 'https://msfloss.herokuapp.com';
+// var url = 'http://localhost:3000';
+var url = 'https://msfloss.herokuapp.com';
 
 async function numberOfCommits(elementId){
 	var endpoint = url + '/git/commits/'
@@ -124,7 +124,7 @@ async function graphBarZeroHundread(endpoint, element, label){
         data: {
             labels: Object.keys(data[0]),
             datasets: [{
-            backgroundColor: 'white',
+            backgroundColor: window.chartColors.lightBlue,
             label: label,
             data: Object.values(data[0]),
             borderWidth: 1
@@ -134,7 +134,7 @@ async function graphBarZeroHundread(endpoint, element, label){
         scales: {
             yAxes: [{
                 gridLines: {
-                           lineWidth:15,
+                           lineWidth:10,
 
                            drawBorder: false,
                             color: ['red', 'red', 'red', 'orange', 'orange', 'yellow', 'yellow', 'yellow', 'green', 'green']
