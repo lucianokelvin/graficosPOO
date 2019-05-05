@@ -5,4 +5,9 @@ window.chartColors = {
     green: 'rgb(75, 192, 192)',
     blue: 'rgb(54, 162, 235)',
     purple: 'rgb(153, 102, 255)',
-    }
+ }
+
+window.colors = [];
+window.colors.push(window.chartColors.red);
+window.colors.push(window.chartColors.orange);
+window.colors.push(window.chartColors.yellow);
