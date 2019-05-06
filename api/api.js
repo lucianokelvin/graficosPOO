@@ -21,14 +21,14 @@ async function importance_discussions(elementId){
     manyLineBar(endpoint, elementId, "Importance of Messages")
 }
 
-async function developerBahavior(elementId){
-    var endpoint = url + '/email/developer_bahavior/'
+async function developerBehavior(elementId){
+    var endpoint = url + '/email/developer_behavior/'
     graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level (%)")
 }
 
 async function messagesXcountUsers(elementId){
     var endpoint = url + '/email/messages_x_counts_users/'
-    graphBarManyColumns(endpoint, elementId, "Numero de usuarios x numerod e Mensagens")
+    graphBarManyColumns(endpoint, elementId, "Number of users x Number of messages")
 }
 
 
@@ -48,11 +48,11 @@ async function graphBar(endpoint, element, label){
 	var myChart = new Chart(ctx, {
     	type: 'bar',
     	data: {
-        	labels: Object.keys(data[0]),
+        	labels: Object.keys(data),
         	datasets: [{
             backgroundColor: window.chartColors.blue,
             label: label,
-            data: Object.values(data[0]),
+            data: Object.values(data),
             borderWidth: 1
         }]
     },
@@ -74,10 +74,10 @@ async function graphBarManyColumns(endpoint, element, label){
 
     const data1 = [];
     const data2 = [];
-    var keys = Object.keys(data[0]);
+    var keys = Object.keys(data);
     for (var i = 0; i < keys.length; i++) {
-        data1.push(data[0][keys[i]][0]);
-        data2.push(data[0][keys[i]][1]);
+        data1.push(data[keys[i]][0]);
+        data2.push(data[keys[i]][1]);
     }
 
     var datas = [[]];
@@ -99,7 +99,7 @@ async function graphBarManyColumns(endpoint, element, label){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Object.keys(data[0]),
+            labels: Object.keys(data),
             datasets: datasets
     },
     options: {
@@ -122,11 +122,11 @@ async function graphBarZeroHundread(endpoint, element, label){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Object.keys(data[0]),
+            labels: Object.keys(data),
             datasets: [{
             backgroundColor: window.chartColors.lightBlue,
             label: label,
-            data: Object.values(data[0]),
+            data: Object.values(data),
             borderWidth: 1
         }]
     },
@@ -195,26 +195,26 @@ async function lineBar(endpoint, element, label){
     var myLineChart = new Chart(ctx, {
     type: 'line',
             data: {
-                labels: Object.keys(data[0]),
+                labels: Object.keys(data),
                 datasets: [{
                     label: label,
                     backgroundColor: window.chartColors.green,
                     borderColor: window.chartColors.green,
-                    data: Object.values(data[0]),
+                    data: Object.values(data),
                     fill: false,
                 }]}});
 }
 
 async function manyLineBar(endpoint, element, label){
     const data = await getCall(endpoint)
-    var keys = Object.keys(data[0]);
+    var keys = Object.keys(data);
     var datasets = []
     for (var i = 0; i < keys.length; i++) {
         datasets.push({
             label: keys[i],
             backgroundColor: window.colors[i],
             borderColor: window.colors[i],
-            data: Object.values(data[0][keys[i]][0]),
+            data: Object.values(data[keys[i]]),
             fill: false,
             lineTension : 0.0
         });
@@ -229,7 +229,7 @@ async function manyLineBar(endpoint, element, label){
                     text: label
                 }},
             data: {
-                labels: Object.keys(data[0][keys[0]][0]),
+                labels: Object.keys(data[keys[0]]),
                 datasets: datasets,
                 backgroundColor: window.chartColors.green,
                 borderColor: window.chartColors.green,
