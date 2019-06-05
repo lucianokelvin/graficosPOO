@@ -52,13 +52,44 @@ async function messagesXcountUsers(elementId){
     graphBarManyColumns(endpoint, elementId, "Number of users x Number of messages")
 }
 
-
+async function lifetimeConversation(elementId){
+    var endpoint = url + '/email/lifetime_conversation'
+    graphHorizontalBar(endpoint, elementId, "Lifetime conversation (in days)")
+}
 
 //Get the JSON
 async function getCall(endpoint){
   const response = await fetch(endpoint);
   const body = await response.json();
   return body;
+}
+
+// Plot a horizontal bar chart
+async function graphHorizontalBar(endpoint, element, label){
+    const data = await getCall(endpoint)
+    var ctx = document.getElementById(element);
+    
+    var myChart = new Chart(ctx, {
+        type: 'horizontalBar',
+        data: {
+            labels: Object.keys(data),
+        	datasets: [{
+            backgroundColor: window.chartColors.green,
+            label: label,
+            data: Object.values(data),
+            borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
+            }
+        }
+    });
 }
 
 // Plot a graph of bar
@@ -75,15 +106,15 @@ async function graphBar(endpoint, element, label){
             label: label,
             data: Object.values(data),
             borderWidth: 1
-        }]
-    },
-    options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
             }]
+        },
+        options: {
+            scales: {
+                yAxes: [{
+                    ticks: {
+                        beginAtZero: true
+                    }
+                }]
             }
         }
     });
