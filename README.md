@@ -6,7 +6,7 @@
 The javascript file links below must be inserted in one html file
 ```html
 
-<script src="node_modules/chart.js/dist/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
 <script src="api.js" type="text/javascript"></script>
 ```
 In the order to plot, it is necessary:
