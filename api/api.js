@@ -62,6 +62,16 @@ async function messagesXcountUsers(elementId){
     graphBarManyColumns(endpoint, elementId, "Number of users x Number of messages")
 }
 
+async function numberOfParticipantsSubject(elementId){
+    var endpoint = url + '/email/num_participants'
+ 	graphBar(endpoint, elementId, "Number of Participants by Subject")
+}
+
+async function emailMessageSizes(elementId){
+    var endpoint = url + '/email/message_size'
+ 	graphBar(endpoint, elementId, "Emails size (Number of Characteres)")
+}
+
 async function lifetimeConversation(elementId){
     var endpoint = url + '/email/lifetime_conversation'
     graphHorizontalBar(endpoint, elementId, "Lifetime conversation (in days)")
