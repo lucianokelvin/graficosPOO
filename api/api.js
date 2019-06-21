@@ -54,7 +54,7 @@ async function importance_discussions(elementId){
 
 async function developerBehavior(elementId){
     var endpoint = url + '/email/developer_behavior/'
-    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level (%)")
+    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of User (%)")
 }
 
 async function messagesXcountUsers(elementId){
@@ -69,7 +69,7 @@ async function lifetimeConversation(elementId){
 
 async function subjectSentimentAnalysis(elementId){
     var endpoint = url + '/email/subjects_NLP_analysis/'
-    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of 10 Subjects from mail list (%)")
+    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of Subject (%)")
 }
 
 async function numberOfCLosedIssues(elementId){
@@ -92,7 +92,9 @@ async function graphHorizontalBar(endpoint, element, label){
     var myChart = new Chart(ctx, {
         type: 'horizontalBar',
         data: {
-            labels: Object.keys(data),
+            labels: Object.keys(data).map(function(i) {
+                    if(i.length > 20) return i.slice(0, 20)+"..."
+                    else return i.slice(0, 20)}),
         	datasets: [{
             backgroundColor: window.chartColors.green,
             label: label,
@@ -120,7 +122,9 @@ async function graphBar(endpoint, element, label){
 	var myChart = new Chart(ctx, {
     	type: 'bar',
     	data: {
-        	labels: Object.keys(data),
+        	labels: Object.keys(data).map(function(i) {
+                if(i.length > 20) return i.slice(0, 20)+"..."
+                else return i.slice(0, 20)}),
         	datasets: [{
             backgroundColor: window.chartColors.blue,
             label: label,
@@ -171,7 +175,9 @@ async function graphBarManyColumns(endpoint, element, label){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Object.keys(data),
+            labels: Object.keys(data).map(function(i) {
+                if(i.length > 20) return i.slice(0, 20)+"..."
+                else return i.slice(0, 20)}),
             datasets: datasets
     },
     options: {
@@ -194,7 +200,9 @@ async function graphBarZeroHundread(endpoint, element, label){
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: Object.keys(data),
+            labels: Object.keys(data).map(function(i) {
+                if(i.length > 20) return i.slice(0, 20)+"..."
+                else return i.slice(0, 20)}),
             datasets: [{
             backgroundColor: window.chartColors.lightBlue,
             label: label,
@@ -231,7 +239,9 @@ async function graphBarStack(endpoint, element, label){
 	var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: data[0],
+        labels: data[0].map(function(i) {
+            if(i.length > 20) return i.slice(0, 20)+"..."
+            else return i.slice(0, 20)}),
         datasets: [{
             label: 'Number of Commits',
             stack : 'Stack 0',
@@ -267,7 +277,9 @@ async function lineBar(endpoint, element, label){
     var myLineChart = new Chart(ctx, {
     type: 'line',
             data: {
-                labels: Object.keys(data),
+                labels: Object.keys(data).map(function(i) {
+                    if(i.length > 20) return i.slice(0, 20)+"..."
+                    else return i.slice(0, 20)}),
                 datasets: [{
                     label: label,
                     backgroundColor: window.chartColors.green,
@@ -301,7 +313,9 @@ async function manyLineBar(endpoint, element, label){
                     text: label
                 }},
             data: {
-                labels: Object.keys(data[keys[0]]),
+                labels: Object.keys(data[keys[0]]).map(function(i) {
+                    if(i.length > 20) return i.slice(0, 20)+"..."
+                    else return i.slice(0, 20)}),
                 datasets: datasets,
                 backgroundColor: window.chartColors.green,
                 borderColor: window.chartColors.green,

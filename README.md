@@ -7,7 +7,7 @@ The javascript file links below must be inserted in one html file
 ```html
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/gh/lucianokelvin/graficosPOO@0.2/api/api.js" type="text/javascript"></script>
+<script src="https://cdn.jsdelivr.net/gh/lucianokelvin/graficosPOO@0.3/api/api.js" type="text/javascript"></script>
 ```
 In the order to plot, it is necessary:
 
