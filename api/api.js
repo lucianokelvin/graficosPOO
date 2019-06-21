@@ -32,9 +32,19 @@ async function numberOfCommitsReviews(elementId){
  	graphBarStack(endpoint, elementId, "Commits And Reviews")
 }
 
+async function contributionDaysGit(elementId){
+    var endpoint = url + '/git/contribution_period'
+    graphHorizontalBar(endpoint, elementId, "Contribution Period (Git activity in days)")
+}
+
 async function irc_users(elementId){
  	var endpoint = url + '/irc/users_participation/'
  	lineBar(endpoint, elementId, "IRC users")
+}
+
+async function numberOfIRCMsgs(elementId){
+    var endpoint = url + '/irc/number_messages/'
+    lineBar(endpoint, elementId, "IRC Messages along the Day")
 }
 
 async function importance_discussions(elementId){
@@ -55,6 +65,16 @@ async function messagesXcountUsers(elementId){
 async function lifetimeConversation(elementId){
     var endpoint = url + '/email/lifetime_conversation'
     graphHorizontalBar(endpoint, elementId, "Lifetime conversation (in days)")
+}
+
+async function subjectSentimentAnalysis(elementId){
+    var endpoint = url + '/email/subjects_NLP_analysis/'
+    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of 10 Subjects from mail list (%)")
+}
+
+async function numberOfCLosedIssues(elementId){
+    var endpoint = url + '/issuetracker/issues_closed'
+ 	graphBar(endpoint, elementId, "Number of Closed Issues by Contributor")
 }
 
 //Get the JSON
