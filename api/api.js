@@ -18,18 +18,22 @@ window.colors = [];
 window.colors.push(window.chartColors.red);
 window.colors.push(window.chartColors.orange);
 window.colors.push(window.chartColors.yellow);
+window.colors.push(window.chartColors.green);
+window.colors.push(window.chartColors.blue);
+window.colors.push(window.chartColors.purple);
+window.colors.push(window.chartColors.lightBlue);
 
 
 var url = 'https://msfloss.herokuapp.com';
 
 async function numberOfCommits(elementId){
-	var endpoint = url + '/git/commits/'
- 	graphBar(endpoint, elementId, "Number of Commits")
+    var endpoint = url + '/git/commits/'
+     graphBar(endpoint, elementId, "Number of Commits")
 }
 
 async function numberOfCommitsReviews(elementId){
-	var endpoint = url + '/git/commits_reviews/'
- 	graphBarStack(endpoint, elementId, "Commits And Reviews")
+    var endpoint = url + '/git/commits_reviews/'
+    graphBarStack(endpoint, elementId, "Commits And Reviews")
 }
 
 async function contributionDaysGit(elementId){
@@ -38,8 +42,8 @@ async function contributionDaysGit(elementId){
 }
 
 async function irc_users(elementId){
- 	var endpoint = url + '/irc/users_participation/'
- 	lineBar(endpoint, elementId, "IRC users")
+     var endpoint = url + '/irc/users_participation/'
+     lineBar(endpoint, elementId, "IRC users")
 }
 
 async function numberOfIRCMsgs(elementId){
@@ -64,12 +68,12 @@ async function messagesXcountUsers(elementId){
 
 async function numberOfParticipantsSubject(elementId){
     var endpoint = url + '/email/num_participants'
- 	graphBar(endpoint, elementId, "Number of Participants by Subject")
+     graphBar(endpoint, elementId, "Number of Participants by Subject")
 }
 
 async function emailMessageSizes(elementId){
     var endpoint = url + '/email/message_size'
- 	graphBar(endpoint, elementId, "Emails size (Number of Characteres)")
+     graphBar(endpoint, elementId, "Emails size (Number of Characteres)")
 }
 
 async function lifetimeConversation(elementId){
@@ -84,7 +88,7 @@ async function subjectSentimentAnalysis(elementId){
 
 async function numberOfCLosedIssues(elementId){
     var endpoint = url + '/issuetracker/issues_closed'
- 	graphBar(endpoint, elementId, "Number of Closed Issues by Contributor")
+     graphBar(endpoint, elementId, "Number of Closed Issues by Contributor")
 }
 
 //Get the JSON
@@ -105,8 +109,8 @@ async function graphHorizontalBar(endpoint, element, label){
             labels: Object.keys(data).map(function(i) {
                     if(i.length > 20) return i.slice(0, 20)+"..."
                     else return i.slice(0, 20)}),
-        	datasets: [{
-            backgroundColor: window.chartColors.green,
+            datasets: [{
+            backgroundColor: window.colors[Math.floor(Math.random() * window.colors.length)],
             label: label,
             data: Object.values(data),
             borderWidth: 1
@@ -126,17 +130,17 @@ async function graphHorizontalBar(endpoint, element, label){
 
 // Plot a graph of bar
 async function graphBar(endpoint, element, label){
-	const data = await getCall(endpoint)
-	var ctx = document.getElementById(element);
+    const data = await getCall(endpoint)
+    var ctx = document.getElementById(element);
 
-	var myChart = new Chart(ctx, {
-    	type: 'bar',
-    	data: {
-        	labels: Object.keys(data).map(function(i) {
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: Object.keys(data).map(function(i) {
                 if(i.length > 20) return i.slice(0, 20)+"..."
                 else return i.slice(0, 20)}),
-        	datasets: [{
-            backgroundColor: window.chartColors.blue,
+            datasets: [{
+            backgroundColor: window.colors[Math.floor(Math.random() * window.colors.length)],
             label: label,
             data: Object.values(data),
             borderWidth: 1
@@ -243,10 +247,10 @@ async function graphBarZeroHundread(endpoint, element, label){
 
 // Plot a line of bar with stack
 async function graphBarStack(endpoint, element, label){
-	const data = await getCall(endpoint)
-	var ctx = document.getElementById(element);
+    const data = await getCall(endpoint)
+    var ctx = document.getElementById(element);
 
-	var myChart = new Chart(ctx, {
+    var myChart = new Chart(ctx, {
     type: 'bar',
     data: {
         labels: data[0].map(function(i) {
@@ -331,3 +335,4 @@ async function manyLineBar(endpoint, element, label){
                 borderColor: window.chartColors.green,
             }});
 }
+
