@@ -24,83 +24,111 @@ window.colors.push(window.chartColors.purple);
 window.colors.push(window.chartColors.lightBlue);
 
 
-var url = 'https://msfloss.herokuapp.com';
+var url = 'http://msfloss.herokuapp.com';
 
-async function numberOfCommits(elementId){
+// Get the JSON
+async function getCall(){
+    endpoint = arguments[0];
+    var response = 0;
+    if (arguments.length == 1) {
+        response = await fetch(endpoint);
+    } else if (arguments.length == 2) {
+        response = await fetch(endpoint+"?repo="+arguments[1]);
+    } else if (arguments.length == 3) {
+        response = await fetch(endpoint+"?order="+arguments[1]+"&limit="+arguments[2]);        
+    } else {
+        response = await fetch(endpoint+"?order="+arguments[1]+"&limit="+arguments[2]+"&repo="+arguments[3]);
+    }
+    const body = await response.json();
+    return body;
+}
+
+// GIT
+async function numberOfCommits(elementId, order="decrescent", limit=10, repo=1){
     var endpoint = url + '/git/commits/'
-     graphBar(endpoint, elementId, "Number of Commits")
+    const data = await getCall(endpoint, order, limit, repo)
+    graphBar(endpoint, elementId, "Number of Commits", data)
 }
 
-async function numberOfCommitsReviews(elementId){
+async function numberOfCommitsReviews(elementId, repo=1){
     var endpoint = url + '/git/commits_reviews/'
-    graphBarStack(endpoint, elementId, "Commits And Reviews")
+    const data = await getCall(endpoint, repo)
+    graphBarStack(endpoint, elementId, "Commits And Reviews", data)
 }
 
-async function contributionDaysGit(elementId){
+async function contributionDaysGit(elementId, order="decrescent", limit=10, repo=1){
     var endpoint = url + '/git/contribution_period'
-    graphHorizontalBar(endpoint, elementId, "Contribution Period (Git activity in days)")
+    const data = await getCall(endpoint, order, limit, repo)
+    graphHorizontalBar(endpoint, elementId, "Contribution Period (Git activity in days)", data)
 }
 
-async function irc_users(elementId){
-     var endpoint = url + '/irc/users_participation/'
-     lineBar(endpoint, elementId, "IRC users")
+// IRC
+async function irc_users(elementId, repo="linux-kernel"){
+    var endpoint = url + '/irc/users_participation/'
+    const data = await getCall(endpoint, repo)
+    lineBar(endpoint, elementId, "IRC users", data)
 }
 
-async function numberOfIRCMsgs(elementId){
+async function numberOfIRCMsgs(elementId, repo="linux-kernel"){
     var endpoint = url + '/irc/number_messages/'
-    lineBar(endpoint, elementId, "IRC Messages along the Day")
+    const data = await getCall(endpoint, repo)
+    lineBar(endpoint, elementId, "IRC Messages along the Day", data)
 }
 
-async function importance_discussions(elementId){
+// Email
+async function importance_discussions(elementId, repo=""){
     var endpoint = url + '/email/importance_discussions/'
-    manyLineBar(endpoint, elementId, "Importance of Messages")
+    const data = await getCall(endpoint, repo)
+    manyLineBar(endpoint, elementId, "Importance of Messages", data)
 }
 
-async function developerBehavior(elementId){
+async function developerBehavior(elementId, repo=""){
     var endpoint = url + '/email/developer_behavior/'
-    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of User (%)")
+    const data = await getCall(endpoint, repo)
+    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of User (%)", data)
 }
 
-async function messagesXcountUsers(elementId){
+async function messagesXcountUsers(elementId, repo=""){
     var endpoint = url + '/email/messages_x_counts_users/'
-    graphBarManyColumns(endpoint, elementId, "Number of users x Number of messages")
+    const data = await getCall(endpoint, repo)
+    graphBarManyColumns(endpoint, elementId, "Number of users x Number of messages", data)
 }
 
-async function numberOfParticipantsSubject(elementId){
+async function numberOfParticipantsSubject(elementId, order="decrescent", limit=10, repo=""){
     var endpoint = url + '/email/num_participants'
-     graphBar(endpoint, elementId, "Number of Participants by Subject")
+    const data = await getCall(endpoint, order, limit, repo)
+ 	graphBar(endpoint, elementId, "Number of Participants by Subject", data)
 }
 
-async function emailMessageSizes(elementId){
+async function emailMessageSizes(elementId, order="decrescent", limit=10, repo=""){
     var endpoint = url + '/email/message_size'
-     graphBar(endpoint, elementId, "Emails size (Number of Characteres)")
+    const data = await getCall(endpoint, order, limit, repo)
+ 	graphBar(endpoint, elementId, "Emails size (Number of Characteres)", data)
 }
 
-async function lifetimeConversation(elementId){
+async function lifetimeConversation(elementId, order="decrescent", limit=10, repo=""){
     var endpoint = url + '/email/lifetime_conversation'
-    graphHorizontalBar(endpoint, elementId, "Lifetime conversation (in days)")
+    const data = await getCall(endpoint, order, limit, repo)
+    graphHorizontalBar(endpoint, elementId, "Lifetime conversation (in days)", data)
 }
 
-async function subjectSentimentAnalysis(elementId){
+async function subjectSentimentAnalysis(elementId, order="decrescent", limit=10, repo=""){
     var endpoint = url + '/email/subjects_NLP_analysis/'
-    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of Subject (%)")
+    const data = await getCall(endpoint, order, limit, repo)
+    graphBarZeroHundread(endpoint, elementId, "Aggressiveness Level of Subject (%)", data)
 }
 
-async function numberOfCLosedIssues(elementId){
+// Issue
+async function numberOfCLosedIssues(elementId, order="decrescent", limit=10, repo=""){
     var endpoint = url + '/issuetracker/issues_closed'
-     graphBar(endpoint, elementId, "Number of Closed Issues by Contributor")
+    const data = await getCall(endpoint, order, limit, repo)
+ 	graphBar(endpoint, elementId, "Number of Closed Issues by Contributor", data)
 }
 
-//Get the JSON
-async function getCall(endpoint){
-  const response = await fetch(endpoint);
-  const body = await response.json();
-  return body;
-}
+// -------------------------------------------------------------------------
 
 // Plot a horizontal bar chart
-async function graphHorizontalBar(endpoint, element, label){
-    const data = await getCall(endpoint)
+async function graphHorizontalBar(endpoint, element, label, data){
     var ctx = document.getElementById(element);
     
     var myChart = new Chart(ctx, {
@@ -129,9 +157,8 @@ async function graphHorizontalBar(endpoint, element, label){
 }
 
 // Plot a graph of bar
-async function graphBar(endpoint, element, label){
-    const data = await getCall(endpoint)
-    var ctx = document.getElementById(element);
+async function graphBar(endpoint, element, label, data){
+	var ctx = document.getElementById(element);
 
     var myChart = new Chart(ctx, {
         type: 'bar',
@@ -158,8 +185,7 @@ async function graphBar(endpoint, element, label){
     });
 }
 
-async function graphBarManyColumns(endpoint, element, label){
-    const data = await getCall(endpoint);
+async function graphBarManyColumns(endpoint, element, label, data){
     var ctx = document.getElementById(element);
 
     const data1 = [];
@@ -207,8 +233,7 @@ async function graphBarManyColumns(endpoint, element, label){
 }
 
 
-async function graphBarZeroHundread(endpoint, element, label){
-    const data = await getCall(endpoint)
+async function graphBarZeroHundread(endpoint, element, label, data){
     var ctx = document.getElementById(element);
 
     var myChart = new Chart(ctx, {
@@ -246,8 +271,7 @@ async function graphBarZeroHundread(endpoint, element, label){
 
 
 // Plot a line of bar with stack
-async function graphBarStack(endpoint, element, label){
-    const data = await getCall(endpoint)
+async function graphBarStack(endpoint, element, label, data){
     var ctx = document.getElementById(element);
 
     var myChart = new Chart(ctx, {
@@ -284,8 +308,7 @@ async function graphBarStack(endpoint, element, label){
 }
 
 // Plot a graph of line
-async function lineBar(endpoint, element, label){
-    const data = await getCall(endpoint)
+async function lineBar(endpoint, element, label, data){
     var ctx = document.getElementById(element);
 
     var myLineChart = new Chart(ctx, {
@@ -303,8 +326,7 @@ async function lineBar(endpoint, element, label){
                 }]}});
 }
 
-async function manyLineBar(endpoint, element, label){
-    const data = await getCall(endpoint)
+async function manyLineBar(endpoint, element, label, data){
     var keys = Object.keys(data);
     var datasets = []
     for (var i = 0; i < keys.length; i++) {
@@ -335,4 +357,3 @@ async function manyLineBar(endpoint, element, label){
                 borderColor: window.chartColors.green,
             }});
 }
-

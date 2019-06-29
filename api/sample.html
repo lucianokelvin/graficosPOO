@@ -8,7 +8,7 @@
 <script src="api.js" type="text/javascript"></script>
 
 <!-- Using MsFLOSS Stylesheets -->
-<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/lucianokelvin/graficosPOO@0.5/api/style.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/gh/lucianokelvin/graficosPOO@0.6/api/style.css">
 
 <title>Sample Charts | MsFLOSS Data visualization</title>
  
@@ -37,36 +37,72 @@
 
   <div style="position: absolute; top: 1010px"><h3 style="color: gray">Real data</h3><hr></div>
 
-  <div id="commits-graph" class="graph">
+  <div id="commits-chart" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="commitsChart-number" value="10"><br>
+      <input type="radio" name="commitsChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="commitsChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('commitsChart')" value="Ok">
+    </form>
     <canvas id="commitsChart" width="100" height="100"></canvas>
   </div>
 
   <div id="lifetime-conversation" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="lifetimeConversationChart-number" value="10"><br>
+      <input type="radio" name="lifetimeConversationChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="lifetimeConversationChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('lifetimeConversationChart')" value="Ok">
+    </form>
     <canvas id="lifetimeConversationChart" width="100" height="100"></canvas>
   </div>
 
   <div id="closed-issues" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="closedIssuesChart-number" value="10"><br>
+      <input type="radio" name="closedIssuesChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="closedIssuesChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('closedIssuesChart')" value="Ok">
+    </form>
     <canvas id="closedIssuesChart" width="100" height="100"></canvas>
   </div>
 
-  <div id="irc-messages" class="graph">
-    <canvas id="ircMessagesChart" width="100" height="100"></canvas>
+  <div id="git-contribution" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="ContributionPeriodChart-number" value="10"><br>
+      <input type="radio" name="ContributionPeriodChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="ContributionPeriodChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('ContributionPeriodChart')" value="Ok">
+    </form>
+    <canvas id="ContributionPeriodChart" width="100" height="100"></canvas>
+  </div>
+
+  <div id="num_participants" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="NumEmailParticipantsChart-number" value="10"><br>
+      <input type="radio" name="NumEmailParticipantsChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="NumEmailParticipantsChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('NumEmailParticipantsChart')" value="Ok">
+    </form>
+    <canvas id="NumEmailParticipantsChart" width="100" height="100"></canvas>
+  </div>
+
+  <div id="emails-size" class="graph">
+    <form>
+      Número de elementos: <input type="text" name="EmailsSizeChart-number" value="10"><br>
+      <input type="radio" name="EmailsSizeChart-order" value="decrescent" checked> Decrescente
+      <input type="radio" name="EmailsSizeChart-order" value="crescent"> Crescente
+      <input type="button" onclick="buildChart('EmailsSizeChart')" value="Ok">
+    </form>
+    <canvas id="EmailsSizeChart" width="100" height="100"></canvas>
   </div>
 
   <div id="subjects-analysis" class="graph">
     <canvas id="SubjectsAnalysisChart" width="100" height="100"></canvas>
   </div>
 
-  <div id="num_participants" class="graph">
-    <canvas id="NumEmailParticipantsChart" width="100" height="100"></canvas>
-  </div>
-
-  <div id="git-contribution" class="graph">
-    <canvas id="ContributionPeriodChart" width="100" height="100"></canvas>
-  </div>
-
-  <div id="emails-size" class="graph">
-    <canvas id="EmailsSizeChart" width="100" height="100"></canvas>
+  <div id="irc-messages" class="graph">
+    <canvas id="ircMessagesChart" width="100" height="100"></canvas>
   </div>
 
 </div>
@@ -81,11 +117,48 @@
   numberOfCommits("commitsChart");
   lifetimeConversation("lifetimeConversationChart");
   numberOfCLosedIssues("closedIssuesChart");
-  numberOfIRCMsgs("ircMessagesChart");
-  subjectSentimentAnalysis("SubjectsAnalysisChart");
   numberOfParticipantsSubject("NumEmailParticipantsChart");
   contributionDaysGit("ContributionPeriodChart")
   emailMessageSizes("EmailsSizeChart");
+  subjectSentimentAnalysis("SubjectsAnalysisChart");
+  numberOfIRCMsgs("ircMessagesChart");
+  
+  // build chart using form values
+  function buildChart(chartId) {
+  var order = document.querySelector("input[name="+chartId+"-order]:checked").value;
+  var number = document.querySelector("input[name="+chartId+"-number]").value;
+
+  switch(chartId)
+	{
+    case "commitsChart":
+      numberOfCommits("commitsChart", order, number);
+      break;
+      
+    case "ContributionPeriodChart":
+      contributionDaysGit("ContributionPeriodChart", order, number);
+      break;
+
+		case "lifetimeConversationChart":
+			lifetimeConversation("lifetimeConversationChart", order, number);
+			break;
+
+		case "closedIssuesChart":
+			numberOfCLosedIssues("closedIssuesChart", order, number);			
+			break;
+
+		case "NumEmailParticipantsChart":
+			numberOfParticipantsSubject("NumEmailParticipantsChart", order, number);
+			break;
+
+		case "EmailsSizeChart":
+			emailMessageSizes("EmailsSizeChart", order, number);
+			break;
+			
+		default:
+			break;
+
+	}
+}
 
 </script>
 
